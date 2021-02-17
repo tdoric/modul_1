@@ -68,4 +68,12 @@ public class TestDaoImpl implements AccountDao {
 		
 	}
 
+	@Override
+	public Account findByUsername(String username) {
+		String sql = "SELECT user_id,username,password,email FROM accounts where username=:username";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("username",username);
+		return namedParameterJdbcTemplate.queryForObject(sql,params,new BeanPropertyRowMapper<>(Account.class));
+	}
+
 }

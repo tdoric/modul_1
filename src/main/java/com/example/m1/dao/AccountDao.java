@@ -12,5 +12,6 @@ public interface AccountDao {
 	public void updateSts(Integer userId,Integer status);
 	public void refreshLastLogin(Integer userId);
 	public List<Account> getAll();
+	public Account findByUsername(String username);
 	
 }
