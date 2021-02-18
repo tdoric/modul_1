@@ -6,7 +6,7 @@ import com.example.m1.model.Account;
 
 public interface AccountDao {
 	
-	public void insertAccount(Account acc);
+	public Integer insertAccount(Account acc);
 	public boolean checkUsername(String username);
 	public boolean checkEmail(String mail);
 	public void updateSts(Integer userId,Integer status);

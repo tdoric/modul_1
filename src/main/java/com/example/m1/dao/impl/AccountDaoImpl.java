@@ -7,13 +7,15 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.example.m1.dao.AccountDao;
 import com.example.m1.model.Account;
 
 @Repository
-public class TestDaoImpl implements AccountDao {
+public class AccountDaoImpl implements AccountDao {
 	
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -25,12 +27,13 @@ public class TestDaoImpl implements AccountDao {
 	}
 
 	@Override
-	public void insertAccount(Account acc) {
+	public Integer insertAccount(Account acc) {
 		String sql ="insert  into accounts(username,password,email,created_on,status) "
 				+ "values(:username,:password,:email,current_timestamp,1);";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(acc);
-		namedParameterJdbcTemplate.update(sql, paramSource);
-		
+	    namedParameterJdbcTemplate.update(sql, paramSource, keyHolder, new String[]{"user_id"});
+		return keyHolder.getKey().intValue();
 	}
 
 	@Override
