@@ -79,4 +79,12 @@ public class AccountDaoImpl implements AccountDao {
 		return namedParameterJdbcTemplate.queryForObject(sql,params,new BeanPropertyRowMapper<>(Account.class));
 	}
 
+	@Override
+	public boolean checkIfExist(Integer userId) {
+		String sql="select count(user_id) from accounts where user_id=:userId and status=1";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("userId", userId);
+		return namedParameterJdbcTemplate.queryForObject(sql, params,Integer.class)>0;
+	}
+
 }
