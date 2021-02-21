@@ -84,6 +84,7 @@ CREATE TABLE groups_articles (
 );
 ``` 
 ## USAGE
+### CREATE DOCKER IMAGES
 ```
 docker build -t spring-boot-login -f Dockerfile .
 docker build -t spring-boot-signup -f Dockerfile .
@@ -92,4 +93,125 @@ docker build -t spring-boot-groups -f Dockerfile .
 docker build -t spring-boot-groups-articles -f Dockerfile .
 docker build -t spring-boot-article -f Dockerfile .
 docker build -t spring-boot-news -f Dockerfile .
+```
+### CREATE DOCKER-COMPOSE.YML
+```
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+    - 5432
+    ports:
+      - 5432:5432
+    environment:
+         - POSTGRES_PASSWORD=password
+         - POSTGRES_USER=admin
+         - POSTGRES_DB=psql_db
+    restart: unless-stopped
+#*****************************************
+  spring-boot-login:
+    image: spring-boot-login:latest
+    network_mode: bridge
+    #container_name: modul-login
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+     
+#*****************************************
+  spring-boot-signup:
+    image: spring-boot-signup:latest
+    network_mode: bridge
+    container_name: modul-signup
+    expose:
+      - 8090
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+#*****************************************
+  spring-boot-likes:
+    image: spring-boot-likes:latest
+    network_mode: bridge
+    container_name: modul-likes
+    expose:
+      - 8091
+    ports:
+      - 8091:8091
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+#*****************************************
+  spring-boot-groups:
+    image: spring-boot-groups:latest
+    network_mode: bridge
+    container_name: modul-groups
+    expose:
+      - 8092
+    ports:
+      - 8092:8092
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+# APP*****************************************
+  spring-boot-groups-articles:
+    image: spring-boot-groups-articles:latest
+    network_mode: bridge
+    container_name: modul-groups-articles
+    expose:
+      - 8093
+    ports:
+      - 8093:8093
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres 
+# APP*****************************************
+  spring-boot-article:
+    image: spring-boot-article:latest
+    network_mode: bridge
+    container_name: modul-article
+    expose:
+      - 8094
+    ports:
+      - 8094:8094
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres  
+# APP*****************************************
+  spring-boot-news:
+    image: spring-boot-news:latest
+    network_mode: bridge
+    container_name: modul-news
+    expose:
+      - 8095
+    ports:
+      - 8095:8095
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+volumes:
+  postgres-data:
 ```
