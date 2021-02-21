@@ -8,8 +8,7 @@
 [Modul 7](https://github.com/tdoric/module_7)- groups_article <br />
 [Modul 8](https://github.com/tdoric/module_8)- article <br />
 [Modul 9](https://github.com/tdoric/module_9)- news <br />
-<br /> <br />
-
+<br /> 
 # Prerequisites
 - [PostgreSQL](https://hub.docker.com/_/postgres)
 - [JAVA 11](https://jdk.java.net/11/)
