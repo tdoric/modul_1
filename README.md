@@ -24,13 +24,13 @@ CLEAN INSTALL ALL 9 MODULES
 ```
 ### CREATE DOCKER IMAGES
 ```
-docker build -t spring-boot-login -f Dockerfile .
-docker build -t spring-boot-signup -f Dockerfile .
-docker build -t spring-boot-likes -f Dockerfile .
-docker build -t spring-boot-groups -f Dockerfile .
-docker build -t spring-boot-groups-articles -f Dockerfile .
-docker build -t spring-boot-article -f Dockerfile .
-docker build -t spring-boot-news -f Dockerfile .
+docker build -t spring-boot-login            -f Dockerfile .
+docker build -t spring-boot-signup           -f Dockerfile .
+docker build -t spring-boot-likes            -f Dockerfile .
+docker build -t spring-boot-groups           -f Dockerfile .
+docker build -t spring-boot-groups-articles  -f Dockerfile .
+docker build -t spring-boot-article          -f Dockerfile .
+docker build -t spring-boot-news             -f Dockerfile .
 ```
 ### CREATE DOCKER-COMPOSE.YML
 ```
@@ -108,7 +108,7 @@ services:
       - postgres
     links:
       - postgres
-# APP*****************************************
+#*****************************************
   spring-boot-groups-articles:
     image: spring-boot-groups-articles:latest
     network_mode: bridge
@@ -122,7 +122,7 @@ services:
       - postgres
     links:
       - postgres 
-# APP*****************************************
+#*****************************************
   spring-boot-article:
     image: spring-boot-article:latest
     network_mode: bridge
@@ -136,7 +136,7 @@ services:
       - postgres
     links:
       - postgres  
-# APP*****************************************
+#*****************************************
   spring-boot-news:
     image: spring-boot-news:latest
     network_mode: bridge
@@ -160,13 +160,13 @@ docker-compose up
 ### CREATE TABLES IN DATABASE 
 ``` 
 CREATE TABLE accounts (
-    user_id serial PRIMARY KEY,
-    username VARCHAR ( 50 ) UNIQUE NOT NULL,
-    password VARCHAR ( 80 ) NOT NULL,
-    email VARCHAR ( 255 ) UNIQUE NOT NULL,
-    created_on TIMESTAMP NOT NULL,
-    last_login TIMESTAMP,
-    status int not null
+   user_id serial PRIMARY KEY,
+   username VARCHAR ( 50 ) UNIQUE NOT NULL,
+   password VARCHAR ( 80 ) NOT NULL,
+   email VARCHAR ( 255 ) UNIQUE NOT NULL,
+   created_on TIMESTAMP NOT NULL,
+   last_login TIMESTAMP,
+   status int not null
 );
 CREATE TABLE roles(
    role_id serial PRIMARY KEY,
@@ -174,58 +174,58 @@ CREATE TABLE roles(
    status int not null
 );
 CREATE TABLE account_roles (
-  user_id INT NOT NULL,
-  role_id INT NOT NULL,
-  grant_date TIMESTAMP,
-  status int not null,
-  PRIMARY KEY (user_id, role_id),
-  FOREIGN KEY (role_id)
+   user_id INT NOT NULL,
+   role_id INT NOT NULL,
+   grant_date TIMESTAMP,
+   status int not null,
+   PRIMARY KEY (user_id, role_id),
+   FOREIGN KEY (role_id)
       REFERENCES roles (role_id),
-  FOREIGN KEY (user_id)
+   FOREIGN KEY (user_id)
       REFERENCES accounts (user_id)
 );
 CREATE TABLE articles(
- article_id serial PRIMARY KEY,
- title VARCHAR(150) unique NOT NULL,
- publish_date date,
- status int not null
+   article_id serial PRIMARY KEY,
+   title VARCHAR(150) unique NOT NULL,
+   publish_date date,
+   status int not null
 );
 CREATE TABLE account_articles (
-  user_id INT NOT NULL,
-  article_id INT NOT NULL,
-  status int not null,
-  PRIMARY KEY (user_id, article_id),
-  FOREIGN KEY (article_id)
+   user_id INT NOT NULL,
+   article_id INT NOT NULL,
+   status int not null,
+   PRIMARY KEY (user_id, article_id),
+   FOREIGN KEY (article_id)
       REFERENCES articles (article_id),
-  FOREIGN KEY (user_id)
+   FOREIGN KEY (user_id)
       REFERENCES accounts (user_id)
 );
 CREATE TABLE likes (
-  user_id INT NOT NULL,
-  article_id INT NOT NULL,
-  like_date TIMESTAMP,
-  PRIMARY KEY (user_id, article_id),
-  FOREIGN KEY (article_id)
+   user_id INT NOT NULL,
+   article_id INT NOT NULL,
+   like_date TIMESTAMP,
+   PRIMARY KEY (user_id, article_id),
+   FOREIGN KEY (article_id)
       REFERENCES articles (article_id),
-  FOREIGN KEY (user_id)
+   FOREIGN KEY (user_id)
       REFERENCES accounts (user_id)
 );
 CREATE TABLE groups (
-  groups_id serial primary key,
-  user_id INT not null references accounts(user_id),
-  groupname VARCHAR(80) not null,
- status int not null,
-  unique(user_id,groupname)
+   groups_id serial primary key,
+   user_id INT not null references accounts(user_id),
+   groupname VARCHAR(80) not null,
+   status int not null,
+   unique(user_id,groupname)
 );
 CREATE TABLE groups_articles (
-  groups_id INT NOT NULL,
-  article_id INT NOT NULL,
-  status int not null,
-  FOREIGN KEY (article_id)
+   groups_id INT NOT NULL,
+   article_id INT NOT NULL,
+   status int not null,
+   FOREIGN KEY (article_id)
       REFERENCES articles (article_id),
-  FOREIGN KEY (groups_id)
+   FOREIGN KEY (groups_id)
       REFERENCES groups (groups_id),
-  unique(groups_id,article_id)
+   unique(groups_id,article_id)
 );
 ``` 
 ### INSERT ROLES IN TABLE
