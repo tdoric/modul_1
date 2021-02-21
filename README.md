@@ -1,0 +1,101 @@
+# Mikroservisi (sastoji se od 9 modula)
+Modul 1 - dao,repository and objects -
+https://github.com/tdoric/modul_1  <br />
+Modul 2 - login 
+https://github.com/tdoric/modul_2 <br />
+Modul 3 - signup 
+https://github.com/tdoric/module_3 <br />
+Modul 4 - security 
+https://github.com/tdoric/module_4 <br />
+Modul 5 - likes 
+https://github.com/tdoric/module_5 <br />
+Modul 6 - groups 
+https://github.com/tdoric/module_6 <br />
+Modul 7 - groups_article 
+https://github.com/tdoric/module_7 <br />
+Modul 8 - article <
+https://github.com/tdoric/module_8 <br />
+Modul 9 - news 
+https://github.com/tdoric/module_9
+<br /> <br />
+
+## DATABASE  
+- [PostgreSQL](https://hub.docker.com/_/postgres)
+### DDL 
+``` 
+CREATE TABLE accounts (
+	user_id serial PRIMARY KEY,
+	username VARCHAR ( 50 ) UNIQUE NOT NULL,
+	password VARCHAR ( 80 ) NOT NULL,
+	email VARCHAR ( 255 ) UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+    last_login TIMESTAMP,
+    status int not null
+);
+
+CREATE TABLE roles(
+   role_id serial PRIMARY KEY,
+   role_name VARCHAR (255) UNIQUE NOT null,
+   status int not null
+);
+
+CREATE TABLE account_roles (
+  user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  grant_date TIMESTAMP,
+  status int not null,
+  PRIMARY KEY (user_id, role_id),
+  FOREIGN KEY (role_id)
+      REFERENCES roles (role_id),
+  FOREIGN KEY (user_id)
+      REFERENCES accounts (user_id)
+);
+
+CREATE TABLE articles(
+ article_id serial PRIMARY KEY,
+ title VARCHAR(150) unique NOT NULL,
+ publish_date date,
+ status int not null
+);
+
+CREATE TABLE account_articles (
+  user_id INT NOT NULL,
+  article_id INT NOT NULL,
+  status int not null,
+  PRIMARY KEY (user_id, article_id),
+  FOREIGN KEY (article_id)
+      REFERENCES articles (article_id),
+  FOREIGN KEY (user_id)
+      REFERENCES accounts (user_id)
+);
+
+CREATE TABLE likes (
+  user_id INT NOT NULL,
+  article_id INT NOT NULL,
+  like_date TIMESTAMP,
+  PRIMARY KEY (user_id, article_id),
+  FOREIGN KEY (article_id)
+      REFERENCES articles (article_id),
+  FOREIGN KEY (user_id)
+      REFERENCES accounts (user_id)
+);
+
+CREATE TABLE groups (
+  groups_id serial primary key,
+  user_id INT not null references accounts(user_id),
+  groupname VARCHAR(80) not null,
+ status int not null,
+  unique(user_id,groupname)
+);
+
+CREATE TABLE groups_articles (
+  groups_id INT NOT NULL,
+  article_id INT NOT NULL,
+  status int not null,
+  FOREIGN KEY (article_id)
+      REFERENCES articles (article_id),
+  FOREIGN KEY (groups_id)
+      REFERENCES groups (groups_id),
+  unique(groups_id,article_id)
+);
+``` 
