@@ -228,3 +228,8 @@ CREATE TABLE groups_articles (
   unique(groups_id,article_id)
 );
 ``` 
+### INSERT ROLES IN TABLEI
+``` 
+INSERT INTO roles(role_name, status) VALUES('Writer', 1);
+INSERT INTO roles(role_name, status) VALUES('Reader', 1);
+``` 
