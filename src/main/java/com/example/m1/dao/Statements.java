@@ -57,7 +57,8 @@ public final class Statements {
 		private Role() {
 			 throw new IllegalStateException(UTILITY);
 	    }
-		public static final String GET = "SELECT role_name,status FROM roles";
+		public static final String GET = "SELECT r.role_name,r.status from roles r join account_roles ar on r.role_id =ar.role_id "
+				+ " where user_id=:userId and r.status=1 and ar.status=1";
 		public static final String INSERT_ROLE_ACC = "INSERT INTO ACCOUNT_ROLES(user_id,role_id,status) values (:userId,:roleId,1)";
 		
 	}

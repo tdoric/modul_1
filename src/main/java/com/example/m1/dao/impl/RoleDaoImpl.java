@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
@@ -20,10 +21,14 @@ public class RoleDaoImpl implements RoleDao {
 	
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	
+	private static final String USER_ID="userId";
 
 	@Override
 	public List<Role> getRolesByUser(Integer userId) {
-		return namedParameterJdbcTemplate.query(Statements.Role.GET, new BeanPropertyRowMapper<>(Role.class));
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue(USER_ID,userId);
+		return namedParameterJdbcTemplate.query(Statements.Role.GET,params, new BeanPropertyRowMapper<>(Role.class));
 	}
 
 	@Override
