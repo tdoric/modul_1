@@ -83,3 +83,13 @@ CREATE TABLE groups_articles (
   unique(groups_id,article_id)
 );
 ``` 
+## USAGE
+```
+docker build -t spring-boot-login -f Dockerfile .
+docker build -t spring-boot-signup -f Dockerfile .
+docker build -t spring-boot-likes -f Dockerfile .
+docker build -t spring-boot-groups -f Dockerfile .
+docker build -t spring-boot-groups-articles -f Dockerfile .
+docker build -t spring-boot-article -f Dockerfile .
+docker build -t spring-boot-news -f Dockerfile .
+```
