@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import com.example.m1.dao.RoleDao;
+import com.example.m1.dao.Statements;
 import com.example.m1.model.Role;
 import com.example.m1.model.RoleAccount;
 
@@ -22,15 +23,13 @@ public class RoleDaoImpl implements RoleDao {
 
 	@Override
 	public List<Role> getRolesByUser(Integer userId) {
-		String sql = "SELECT role_name,status FROM roles";
-		return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Role.class));
+		return namedParameterJdbcTemplate.query(Statements.Role.GET, new BeanPropertyRowMapper<>(Role.class));
 	}
 
 	@Override
 	public void insertRolesForUser(List<RoleAccount> roleAcc) {
-		String sql = "INSERT INTO ACCOUNT_ROLES(user_id,role_id,status) values (:userId,:roleId,1)";
 		SqlParameterSource[] parameterSource = SqlParameterSourceUtils.createBatch(roleAcc.toArray());
-		namedParameterJdbcTemplate.batchUpdate(sql,parameterSource);
+		namedParameterJdbcTemplate.batchUpdate(Statements.Role.INSERT_ROLE_ACC,parameterSource);
 		
 	}
 

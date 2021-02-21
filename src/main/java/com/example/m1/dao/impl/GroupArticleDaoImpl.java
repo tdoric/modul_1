@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.m1.dao.GroupArticleDao;
+import com.example.m1.dao.Statements;
 import com.example.m1.model.GroupArticle;
 
 @Repository
@@ -14,23 +15,23 @@ public class GroupArticleDaoImpl implements GroupArticleDao {
 	
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	
+	private static final String USER_ID="userId";
+	private static final String GROUP_ID="groupsId";
 
 	@Override
 	public void insertToGroupArticle(GroupArticle groupArticle) {
-		String sql="INSERT INTO GROUPS_ARTICLES(groups_id,article_id,status) values (:groupsId,:articleId,1)";
-		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(groupArticle);
-		namedParameterJdbcTemplate.update(sql, paramSource);
 		
-
+		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(groupArticle);
+		namedParameterJdbcTemplate.update(Statements.GroupArticle.INSERT, paramSource);
 	}
 
 	@Override
 	public boolean checkOwnershipOfGroup(Integer userId, Integer groupId) {
-		String sql="SELECT COUNT(groups_id) from groups where user_id=:userId and groups_id=:groupsId and status=1";
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("userId", userId);
-		params.addValue("groupsId", groupId);
-		return namedParameterJdbcTemplate.queryForObject(sql, params,Integer.class)>0;
+		params.addValue(USER_ID, userId);
+		params.addValue(GROUP_ID, groupId);
+		return namedParameterJdbcTemplate.queryForObject(Statements.GroupArticle.CHECK_OWNERSHIP, params,Integer.class)>0;
 	}
 
 }

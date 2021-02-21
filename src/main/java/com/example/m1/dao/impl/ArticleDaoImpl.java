@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.example.m1.dao.ArticleDao;
+import com.example.m1.dao.Statements;
 import com.example.m1.model.Article;
 import com.example.m1.model.ArticleAccount;
 
@@ -20,21 +21,21 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	
+	private static final String PK_ARTICLE="article_id";
 
 	@Override
 	public Integer insertArticle(Article article) {
-		String sql="INSERT INTO ARTICLES (title,publish_date,status) values (:title,current_date,1)";
 		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(article);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-	    namedParameterJdbcTemplate.update(sql, paramSource, keyHolder, new String[]{"article_id"});
+	    namedParameterJdbcTemplate.update(Statements.Article.INSERT, paramSource, keyHolder, new String[]{PK_ARTICLE});
 	    return keyHolder.getKey().intValue();
 	}
 
 	@Override
 	public void insertAuthorsOfArticle(List<ArticleAccount> acc) {
-		String sql="INSERT INTO ACCOUNT_ARTICLES(user_id,article_id,status) values(:userId,:articleId,1)";
 		SqlParameterSource[] parameterSource = SqlParameterSourceUtils.createBatch(acc.toArray());
-		namedParameterJdbcTemplate.batchUpdate(sql,parameterSource);
+		namedParameterJdbcTemplate.batchUpdate(Statements.Article.INSERT_ACC,parameterSource);
 
 	}
 
