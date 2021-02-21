@@ -251,11 +251,11 @@ INSERT INTO roles(role_name, status) VALUES('Reader', 1);
     "title":"Test article",
     "coAuthors":[]
 }
-#LIKE REQUEST - http://localhost:8091/api/like - JWT FROM LOGIN NEEDED
+#LIKE ARTICLE - http://localhost:8091/api/like - JWT FROM LOGIN NEEDED
 {
     "articleId": 13
 }
-#GROUP REQUEST - http://localhost:8092/api/create - JWT FROM LOGIN NEEDED
+#CREATE GROUP - http://localhost:8092/api/create - JWT FROM LOGIN NEEDED
 {
     "groupname":"Test group"
 }
