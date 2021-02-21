@@ -10,8 +10,12 @@
 [Modul 9](https://github.com/tdoric/module_9)- news <br />
 <br /> <br />
 
-## DATABASE  
+# Prerequisites
 - [PostgreSQL](https://hub.docker.com/_/postgres)
+- [JAVA 11](https://jdk.java.net/11/)
+- [MAVEN](https://maven.apache.org/download.cgi)
+
+
 ### DDL 
 ``` 
 CREATE TABLE accounts (
