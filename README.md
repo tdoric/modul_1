@@ -223,3 +223,8 @@ services:
 volumes:
   postgres-data:
 ```
+### RUN DOCKER-COMPOSE.YML
+```
+docker-compose up
+```
+### CREATE TABLES IN DATABASE
