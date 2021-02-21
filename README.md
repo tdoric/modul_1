@@ -84,6 +84,10 @@ CREATE TABLE groups_articles (
 );
 ``` 
 ## USAGE
+### MAVEN CLEAN INSTALL
+```
+CLEAN INSTAL ALL 9 MODULES
+```
 ### CREATE DOCKER IMAGES
 ```
 docker build -t spring-boot-login -f Dockerfile .
