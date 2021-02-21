@@ -228,8 +228,52 @@ CREATE TABLE groups_articles (
   unique(groups_id,article_id)
 );
 ``` 
-### INSERT ROLES IN TABLEI
+### INSERT ROLES IN TABLE
 ``` 
 INSERT INTO roles(role_name, status) VALUES('Writer', 1);
 INSERT INTO roles(role_name, status) VALUES('Reader', 1);
 ``` 
+### REQUESTS
+``` 
+#SIGNUP REQUEST  - http://localhost:8090/api/auth/signup  - NO SECURITY
+{
+    "username": "test",
+    "password": "user",
+    "email": "user@gmail.com",
+    "role": [ 1, 2]
+}
+#LOGIN REQUEST - http://localhost:8080/api/auth/signin - USERNAME AND PASSWORD REQUIRED
+{
+    "username": "test",
+    "password": "user"
+}
+#CREATE ARTICLE - http://localhost:8094/api/article/create - JWT FROM LOGIN NEEDED AND ROLE WRITER
+{
+    "title":"Test article",
+    "coAuthors":[]
+}
+#LIKE REQUEST - http://localhost:8091/api/like - JWT FROM LOGIN NEEDED
+{
+    "articleId": 13
+}
+#GROUP REQUEST - http://localhost:8092/api/create - JWT FROM LOGIN NEEDED
+{
+    "groupname":"Test group"
+}
+#ADD ARTICLE TO GROUP - http://localhost:8093/api/group/add-to-group - JWT FROM LOGIN NEEDED
+{
+    "groupId":6,
+    "articleId": 13
+}
+#GET SPECIFIC NEWS - http://localhost:8095/api/news-feed/get - JWT FROM LOGIN NEEDED
+{
+    "type":"spec",
+    "writerId": 9
+}
+#GET ALL NEWS - http://localhost:8095/api/news-feed/get - JWT FROM LOGIN NEEDED
+{
+    "type":"all"
+}
+
+``` 
+
