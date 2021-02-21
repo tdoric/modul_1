@@ -1,4 +1,4 @@
-# Mikroservisi (sastoji se od 9 modula)
+# Microservices
 [Modul 1](https://github.com/tdoric/modul_1) - dao,repository and objects  <br />
 [Modul 2](https://github.com/tdoric/modul_2) - login  <br />
 [Modul 3](https://github.com/tdoric/module_3)- signup <br />
